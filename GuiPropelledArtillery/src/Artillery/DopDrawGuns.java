@@ -1,7 +1,7 @@
 package Artillery;
 import java.awt.*;
 
-public class DopDrawGuns {
+public class DopDrawGuns implements  IDopDrawGuns{
 
     private DopNumbersGuns dopNumbersGuns;
 

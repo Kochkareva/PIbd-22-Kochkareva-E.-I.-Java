@@ -10,34 +10,48 @@ public class FormArtillery {
     private JPanel MainPanel;
     private JPanel PanelButtonCreate;
     private JPanel ButtonPanel;
-
-    private JButton buttonCreate;
-    private JButton buttonLeft;
-    private JButton buttonRight;
-    private JButton buttonUp;
-    private JButton buttonDown;
     private JPanel ButtomPanel;
+    private JButton buttonCreateCombatVehicle;
+    private JButton buttonRight;
+    private JButton buttonDown;
+    private JButton buttonUp;
+    private JButton buttonLeft;
+    private JButton buttonCreateSelfPropelledArtillery;
 
-    private SelfPropelledArtillery artillery;
-    private DrawArtillery drawArtillery;
+    private ITransport combatVehicle;
+    private Draw draw;
 
     public FormArtillery() {
         JFrame frame = new JFrame("Self Propelled Artillery");
         frame.setSize(new Dimension(1000, 600));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        drawArtillery = new DrawArtillery();
-        // Отработка нажатия кнопки создать "Создать"
-        buttonCreate.addActionListener(new ActionListener() {
+        draw = new Draw();
+        //Отработка нажатия кнопки создать "Создать боевую машину"
+        buttonCreateCombatVehicle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                Random rand = new Random();
-                frame.remove(drawArtillery);
-                artillery = new SelfPropelledArtillery();
-                artillery.Init(rand.nextInt(200) + 100, rand.nextInt(1000) + 1000, Color.GREEN, Color.GRAY, true, true, rand.nextInt(5)+1);
-                artillery.SetPosition(rand.nextInt(90) + 10, rand.nextInt(90) + 10, MainPanel.getWidth(), MainPanel.getHeight() - ButtonPanel.getHeight()-PanelButtonCreate.getHeight());
-                drawArtillery.setSelf_propelled_artillery(artillery);
-                MainPanel.add(drawArtillery);
+                Random rnd = new Random();
+                frame.remove(draw);
+                combatVehicle = new CombatVehicle(rnd.nextInt(100), rnd.nextInt(1000), Color.GREEN);
+                combatVehicle.SetPosition(rnd.nextInt(90) + 10, rnd.nextInt(90) + 10, MainPanel.getWidth(), MainPanel.getHeight() - ButtonPanel.getHeight()-PanelButtonCreate.getHeight());
+                draw.setCombatVehicle(combatVehicle);
+                MainPanel.add(draw);
+                frame.repaint();
+                frame.setVisible(true);
+            }
+        });
+        //Обработка нажатия кнопки "Создать самоходную артилерийскую установку"
+        buttonCreateSelfPropelledArtillery.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Random rnd = new Random();
+                frame.remove(draw);
+                combatVehicle = new SelfPropelledArtillery(rnd.nextInt(100), rnd.nextInt(1000), Color.GREEN,
+                        Color.GRAY, true, true,rnd.nextInt(3) ,rnd.nextInt(7)+1);
+                combatVehicle.SetPosition(rnd.nextInt(90) + 10, rnd.nextInt(90) + 10, MainPanel.getWidth(), MainPanel.getHeight() - ButtonPanel.getHeight()-PanelButtonCreate.getHeight());
+                draw.setCombatVehicle(combatVehicle);
+                MainPanel.add(draw);
                 frame.repaint();
                 frame.setVisible(true);
             }
@@ -49,16 +63,16 @@ public class FormArtillery {
             public void actionPerformed(ActionEvent e) {
                 Object name = e.getSource();
                 if (name == buttonDown) {
-                    artillery.MoveTransport(Direction.Down);
+                    combatVehicle.MoveTransport(Direction.Down);
                 }
                 if (name == buttonLeft) {
-                    artillery.MoveTransport(Direction.Left);
+                    combatVehicle.MoveTransport(Direction.Left);
                 }
                 if (name == buttonRight) {
-                    artillery.MoveTransport(Direction.Right);
+                    combatVehicle.MoveTransport(Direction.Right);
                 }
                 if (name == buttonUp) {
-                    artillery.MoveTransport(Direction.Up);
+                    combatVehicle.MoveTransport(Direction.Up);
                 }
             }
         };
@@ -73,5 +87,3 @@ public class FormArtillery {
         frame.setVisible(true);
     }
 }
-
-
