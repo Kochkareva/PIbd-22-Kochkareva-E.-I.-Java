@@ -4,7 +4,7 @@ import java.awt.*;
 
 // Класс отрисовки самоходной артиллерийской установки
 public class SelfPropelledArtillery extends CombatVehicle{
-    /// Дополнительный цвет
+    // Дополнительный цвет
     public Color DopColor;
     public Color gatDopColor() {
         return DopColor;
@@ -12,7 +12,7 @@ public class SelfPropelledArtillery extends CombatVehicle{
     public void setDopColor( Color newDopColor){
         DopColor = newDopColor;
     }
-    /// Признак наличия боекомплекта
+    // Признак наличия боекомплекта
     public boolean Ammunition;
     public boolean getAmmunition(){
         return Ammunition;
@@ -21,7 +21,7 @@ public class SelfPropelledArtillery extends CombatVehicle{
         Ammunition = ammunition;
     }
 
-    /// Признак наличия боевого орудия
+    // Признак наличия боевого орудия
     public boolean Gun;
     public boolean getGun(){
         return Gun;

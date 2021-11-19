@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<form xmlns="http://www.intellij.com/uidesigner/form/" version="1" bind-to-class="Artillery.FormBase">
+  <grid id="27dc6" binding="MainPanel" layout-manager="BorderLayout" hgap="0" vgap="0">
+    <constraints>
+      <xy x="20" y="20" width="500" height="400"/>
+    </constraints>
+    <properties/>
+    <border type="none"/>
+    <children>
+      <grid id="449ad" binding="panelDraw" layout-manager="BorderLayout" hgap="0" vgap="0">
+        <constraints border-constraint="Center"/>
+        <properties/>
+        <border type="none"/>
+        <children/>
+      </grid>
+      <grid id="aea62" binding="panelButton" layout-manager="GridLayoutManager" row-count="3" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
+        <margin top="0" left="0" bottom="0" right="0"/>
+        <constraints border-constraint="East"/>
+        <properties/>
+        <border type="none"/>
+        <children>
+          <component id="94c39" class="javax.swing.JButton" binding="buttonSetCombatvehicle">
+            <constraints>
+              <grid row="0" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false">
+                <maximum-size width="210" height="71"/>
+              </grid>
+            </constraints>
+            <properties>
+              <margin top="0" left="0" bottom="0" right="0"/>
+              <text value="Поставить бронерованную машину"/>
+            </properties>
+          </component>
+          <component id="d717c" class="javax.swing.JButton" binding="buttonSetSelfPropilledArtillery">
+            <constraints>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false">
+                <maximum-size width="210" height="80"/>
+              </grid>
+            </constraints>
+            <properties>
+              <horizontalTextPosition value="11"/>
+              <text value="Поставить самходную артиллерийскую установку"/>
+              <verticalTextPosition value="0"/>
+            </properties>
+          </component>
+          <grid id="515b7" binding="groupBox" layout-manager="BorderLayout" hgap="0" vgap="0">
+            <constraints>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="3" hsize-policy="3" anchor="5" fill="0" indent="0" use-parent-layout="false">
+                <maximum-size width="160" height="70"/>
+              </grid>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="816ed" class="javax.swing.JLabel">
+                <constraints border-constraint="North"/>
+                <properties>
+                  <text value="Забрать технику"/>
+                </properties>
+              </component>
+              <component id="e245b" class="javax.swing.JLabel">
+                <constraints border-constraint="West"/>
+                <properties>
+                  <text value="Место: "/>
+                </properties>
+              </component>
+              <component id="5de93" class="javax.swing.JTextField" binding="placeArtillery">
+                <constraints border-constraint="Center"/>
+                <properties>
+                  <maximumSize width="60" height="30"/>
+                  <minimumSize width="50" height="20"/>
+                </properties>
+              </component>
+              <component id="27089" class="javax.swing.JButton" binding="buttonTakeCombatVehicle">
+                <constraints border-constraint="South"/>
+                <properties>
+                  <text value="Забрать"/>
+                </properties>
+              </component>
+            </children>
+          </grid>
+        </children>
+      </grid>
+    </children>
+  </grid>
+</form>

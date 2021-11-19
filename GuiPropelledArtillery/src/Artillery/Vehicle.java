@@ -32,7 +32,7 @@ public abstract class Vehicle implements ITransport{
         Weight = newWeight;
     }
 
-    /// Основной цвет
+    // Основной цвет
     public Color MainColor;
     public Color getMainColor() {
         return MainColor;

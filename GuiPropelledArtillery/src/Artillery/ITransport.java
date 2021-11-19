@@ -2,7 +2,7 @@ package Artillery;
 
 import java.awt.*;
 
-interface ITransport {
+public interface ITransport {
     /**
      * Установка позиции
      * @param x Координата X
