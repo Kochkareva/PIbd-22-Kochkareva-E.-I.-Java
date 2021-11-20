@@ -4,21 +4,25 @@ import javax.swing.*;
 import java.awt.*;
 
 public class DrawBase extends JPanel {
-    private Base<ITransport, IDopDrawGuns> baseArtillery;
+    private final BaseCollection baseCollection;
+    private String selectedItem = null;
 
-    public DrawBase(Base<ITransport, IDopDrawGuns> baseArtillery){
-        this.baseArtillery = baseArtillery;
+    public DrawBase(BaseCollection baseCollection) {
+        this.baseCollection = baseCollection;
     }
 
-    protected void paintComponent(Graphics g){
+    @Override
+    protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        if(baseArtillery !=null){
-            baseArtillery.Draw(g);
+        if (selectedItem != null) {
+            if (baseCollection != null) {
+                baseCollection.get(selectedItem).Draw(g);
+            }
         }
         super.repaint();
     }
 
-    public Base<ITransport, IDopDrawGuns> getBaseArtillery(){
-        return baseArtillery;
+    public void setSelectedItem(String selectedItem) {
+        this.selectedItem = selectedItem;
     }
 }
