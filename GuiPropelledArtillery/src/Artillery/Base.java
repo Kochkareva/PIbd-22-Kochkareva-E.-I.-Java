@@ -1,12 +1,15 @@
 package Artillery;
 
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Параметризованный класс для хранения набора объектов от интерфейса ITransport
  */
 public class Base<T extends ITransport, N extends IDopDrawGuns> {
-    // Массив объектов, которые храним
-    private final Object[] _places;
+    // Список объектов, которые храним
+    private final List<T> _places;
 
     // Ширина окна отрисовки
     private final int pictureWidth;
@@ -20,20 +23,33 @@ public class Base<T extends ITransport, N extends IDopDrawGuns> {
     /// Размер места на базе (высота)
     private final int _placeSizeHeight = 80;
 
+    //Максимальное количество мест на базе
+    private final int _maxCount;
+
+    public T get(int index) {
+        if (index > -1 && index < _places.size()) {
+            return _places.get(index);
+        }
+        return null;
+    }
+    public void set(int index, T value){
+        if(_places.size()>index && index>=0){
+            _places.add(index, value);
+        }
+    }
+
     /**
      * Конструктор
-     *
      * @param picWidth  Рамзер базы - ширина
      * @param picHeight Рамзер базы - высота
      */
     public Base(int picWidth, int picHeight) {
         int width = picWidth / _placeSizeWidth;
         int height = picHeight / _placeSizeHeight;
-
-        _places = new Object[width*height];
-       // Object[] _places =(Object[]) places;
+        _maxCount = width*height;
         pictureWidth = picWidth;
         pictureHeight = picHeight;
+        _places=new ArrayList<>();
     }
 
     /**
@@ -41,14 +57,9 @@ public class Base<T extends ITransport, N extends IDopDrawGuns> {
      * Логика действия: на базу добавляется военная техника
      */
     public int operatorAdd(T combatVehicle) {
-        for (int i = 0; i < _places.length; i++) {
-            if (_places[i] == null) {
-                combatVehicle.SetPosition(i % (pictureWidth / _placeSizeWidth) * _placeSizeWidth + 5,
-                        i / (pictureHeight / _placeSizeHeight) * _placeSizeHeight + 10, pictureWidth, pictureHeight);
-
-                _places[i] = combatVehicle;
-                return i;
-            }
+        if(_places.size()<_maxCount){
+            _places.add(combatVehicle);
+            return _places.size();
         }
         return -1;
     }
@@ -58,32 +69,12 @@ public class Base<T extends ITransport, N extends IDopDrawGuns> {
      * Логика действия: с базы забираем военную технику
      */
     public T operatorDelete(int index) {
-        if (index <= _places.length) {
-            T result = (T)_places[index];
-            _places[index] = null;
-            return result;
+        if(index >= 0 && index<_maxCount && _places.get(index) != null){
+            T vehicle = _places.get(index);
+            _places.remove(index);
+            return vehicle;
         }
         return null;
-    }
-
-    public boolean Equal(Base<ITransport, IDopDrawGuns> bases, int x){
-        int count=0;
-        for(int i=0; i<bases._places.length;i++){
-            if(bases._places != null){
-                count++;
-            }
-        }
-        return count == x;
-    }
-
-    public boolean NotEqual(Base<ITransport, IDopDrawGuns> bases, int x){
-        int count=0;
-        for(int i=0; i<bases._places.length;i++){
-            if(bases._places != null){
-                count++;
-            }
-        }
-        return count != x;
     }
     /**
      * Метод отрисовки базы
@@ -91,11 +82,10 @@ public class Base<T extends ITransport, N extends IDopDrawGuns> {
      */
     public void Draw(Graphics g) {
         DrawMarking(g);
-        for(Object place : _places){
-            if(place !=null){
-                T places_ = (T)place;
-                places_.DrawTransport(g);
-            }
+        for( int i =0;i< _places.size();i++ ){
+            _places.get(i).SetPosition(i % (pictureWidth / _placeSizeWidth) * _placeSizeWidth + 5,
+                    i / (pictureHeight / _placeSizeHeight) * _placeSizeHeight + 10, pictureWidth, pictureHeight);
+            _places.get(i).DrawTransport(g);
         }
     }
     /**
