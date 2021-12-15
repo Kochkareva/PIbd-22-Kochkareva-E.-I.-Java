@@ -1,15 +1,15 @@
 package Artillery;
 import java.awt.*;
 
-public class DopDrawGuns implements  IDopDrawGuns{
+public class TypeGuns1 implements  IGuns{
 
-    private DopNumbersGuns dopNumbersGuns;
+    private NumbersGuns dopNumbersGuns;
 
     public void setNewNumbersGun(int NewNumbersGun){
-        dopNumbersGuns = DopNumbersGuns.SetNumberGuns(NewNumbersGun);
+        dopNumbersGuns = NumbersGuns.SetNumberGuns(NewNumbersGun);
     }
 
-    DopDrawGuns(int number){
+    TypeGuns1(int number){
         setNewNumbersGun(number);
     }
     private Color dopColor;

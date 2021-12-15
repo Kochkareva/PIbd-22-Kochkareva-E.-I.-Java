@@ -1,11 +1,11 @@
 package Artillery;
 
-public enum DopNumbersGuns {
+public enum NumbersGuns {
     one,
     two,
     three;
 
-    public static DopNumbersGuns SetNumberGuns(int newNumber) {
+    public static NumbersGuns SetNumberGuns(int newNumber) {
         return switch (newNumber) {
             case 1 -> one;
             case 2 -> two;

@@ -23,4 +23,10 @@ public interface ITransport {
      * @param g
      */
     void DrawTransport(Graphics g);
+
+    /**
+     * Смена основного цвета
+     * @param color
+     */
+    void SetMainColor(Color color);
 }

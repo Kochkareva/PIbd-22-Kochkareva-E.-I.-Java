@@ -5,7 +5,7 @@ import  java.util.*;
 //Класс-коллекция баз
 public class BaseCollection {
     // Словарь (хранилище) с базами
-    final Map<String, Base<ITransport, IDopDrawGuns>> baseStages;
+    final Map<String, Base<ITransport, IGuns>> baseStages;
 
     public ITransport get(String name, int index) {
         if (baseStages.containsKey(name)) {
@@ -13,7 +13,7 @@ public class BaseCollection {
         }
         return null;
     }
-    public void set(String name, Base<ITransport, IDopDrawGuns> places){
+    public void set(String name, Base<ITransport, IGuns> places){
         if(!baseStages.containsKey(name)) {
             baseStages.put(name, places);
         }
@@ -50,7 +50,7 @@ public class BaseCollection {
         if (baseStages.containsKey(name)) {
             return;
         }
-        baseStages.put(name, new Base<ITransport, IDopDrawGuns>(pictureWidth, pictureHeight));
+        baseStages.put(name, new Base<ITransport, IGuns>(pictureWidth, pictureHeight));
     }
 
     /**
@@ -67,7 +67,7 @@ public class BaseCollection {
      * @param name ind
      * @return
      */
-    public Base<ITransport, IDopDrawGuns> get(String name) {
+    public Base<ITransport, IGuns> get(String name) {
         if (baseStages.containsKey(name)) {
             return baseStages.get(name);
         }
