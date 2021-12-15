@@ -30,7 +30,10 @@ public class SelfPropelledArtillery extends CombatVehicle{
         Gun = gun;
     }
 
-    IDopDrawGuns dopDrawGuns;
+    IGuns dopDrawGuns;
+    public void setDopGuns(IGuns dopDrawGuns){
+        this.dopDrawGuns=dopDrawGuns;
+    }
     /**
      * Инициализация свойств
      * @param maxSpeed Максимальная скорость
@@ -48,11 +51,11 @@ public class SelfPropelledArtillery extends CombatVehicle{
         Ammunition = ammunition;
         Gun = gun;
         switch (formNum){
-            case 0: dopDrawGuns = new DopDrawGuns(dopGuns);
+            case 0: dopDrawGuns = new TypeGuns1(dopGuns);
                 break;
-            case 1: dopDrawGuns = new DopDrawForm1(dopGuns);
+            case 1: dopDrawGuns = new TypeGuns2(dopGuns);
                 break;
-            case 2:dopDrawGuns = new DopDrawForm2(dopGuns);
+            case 2:dopDrawGuns = new TypeGuns3(dopGuns);
                 break;
         }
     }
@@ -75,6 +78,10 @@ public class SelfPropelledArtillery extends CombatVehicle{
             dopDrawGuns.DrawGun(g, DopColor, _startPosX, _startPosY);
         }
         super.DrawTransport(g);
+    }
+
+    public void SetDopColor(Color color){
+        DopColor = color;
     }
 }
 

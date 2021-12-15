@@ -44,42 +44,18 @@ public class FormBase {
         listModelVehicle = new DefaultListModel<>();
         listBoxBase.setModel(listModelVehicle);
         dopLinkedList = new LinkedList<>();
+
         buttonSetCombatvehicle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if (listBoxBase.getSelectedIndex() >= 0) {
-                    JColorChooser mainColor = new JColorChooser();
-                    JOptionPane.showMessageDialog(frame, mainColor, "Выберите главныц цвет", JOptionPane.PLAIN_MESSAGE);
-                    if (mainColor.getColor() != null) {
-                        ITransport transport = new CombatVehicle(100, 1000, mainColor.getColor());
-                        if (baseCollection.get(listBoxBase.getSelectedValue()).operatorAdd(transport) > -1) {
+                    FormCombatVehicleConfig formCombatVehicleConfig = new FormCombatVehicleConfig(frame);
+                    ITransport artillery = formCombatVehicleConfig.getTransport();
+                    if(artillery!=null){
+                        if(baseCollection.get(listBoxBase.getSelectedValue()).operatorAdd(artillery) > -1){
                             frame.repaint();
-                        } else {
+                        }else{
                             JOptionPane.showMessageDialog(frame, "База переполнена");
-                        }
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(frame, "База не выбрана", "Ошибка", JOptionPane.ERROR_MESSAGE);
-                }
-            }
-        });
-        buttonSetSelfPropilledArtillery.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (listBoxBase.getSelectedIndex() >= 0) {
-                    JColorChooser mainColor = new JColorChooser();
-                    JOptionPane.showMessageDialog(frame, mainColor, "Выберите главный цвет", JOptionPane.PLAIN_MESSAGE);
-                    if (mainColor.getColor() != null) {
-                        JColorChooser dopColor = new JColorChooser();
-                        JOptionPane.showMessageDialog(frame, dopColor, "Выберите дополнительный цвет", JOptionPane.PLAIN_MESSAGE);
-                        if (dopColor.getColor() != null) {
-                            Random rand = new Random();
-                            ITransport transport = new SelfPropelledArtillery(100, 1000, mainColor.getColor(), dopColor.getColor(), true, true, rand.nextInt(3), rand.nextInt(3) + 1);
-                            if (baseCollection.get(listBoxBase.getSelectedValue()).operatorAdd(transport) > -1) {
-                                frame.repaint();
-                            } else {
-                                JOptionPane.showMessageDialog(frame, "База переполнена");
-                            }
                         }
                     }
                 } else {
@@ -100,11 +76,10 @@ public class FormBase {
                                     dopLinkedList.add(transport);
                                     frame.repaint();
                                 } else {
-                                    JOptionPane.showMessageDialog(frame, "Военной техники не существует");
-
+                                    JOptionPane.showMessageDialog(frame, "Военной техники не существует","Ошибка" ,JOptionPane.YES_NO_OPTION);
                                 }
-                            } catch (NumberFormatException ex) {
-                                JOptionPane.showMessageDialog(frame, "Военной техники не существует");
+                            } catch (Exception ex) {
+                                JOptionPane.showMessageDialog(frame, "Военной техники не существует", "Ошибка" ,JOptionPane.YES_NO_OPTION);
                             }
                         }
                     }

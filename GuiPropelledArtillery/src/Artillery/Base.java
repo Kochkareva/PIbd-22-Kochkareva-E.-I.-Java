@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Параметризованный класс для хранения набора объектов от интерфейса ITransport
  */
-public class Base<T extends ITransport, N extends IDopDrawGuns> {
+public class Base<T extends ITransport, N extends IGuns> {
     // Список объектов, которые храним
     private final List<T> _places;
 
