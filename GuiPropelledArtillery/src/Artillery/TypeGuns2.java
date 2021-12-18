@@ -40,5 +40,9 @@ public class TypeGuns2 implements IGuns{
                 g.fillPolygon(poly3);
         }
     }
+    @Override
+    public String toString(){
+        return this.getClass().getSimpleName() + "." + (dopNumbersGuns.ordinal()+1);
+    }
 }
 

@@ -105,5 +105,9 @@ public class Base<T extends ITransport, N extends IGuns> {
                     (pictureHeight / _placeSizeHeight) * _placeSizeHeight);
         }
     }
+
+    public void Clear(){
+        _places.clear();
+    }
 }
 
