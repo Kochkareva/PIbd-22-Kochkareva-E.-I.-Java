@@ -45,9 +45,6 @@ public class FormBase {
         frame.setState(JFrame.NORMAL);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
-
-
-
         baseCollection = new BaseCollection(1073, 558);
         drawBase = new DrawBase(baseCollection);
         frame.add(MainPanel);
