@@ -3,6 +3,7 @@ package Artillery;
 import javax.swing.*;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.LinkedList;
@@ -23,6 +24,14 @@ public class FormBase {
     private JButton buttonDeleteBase;
     private JList<String> listBoxBase;
     private JButton buttonTakeToArtilleryForm;
+    private JPanel panelMenu;
+    private JMenuBar menuBar;
+    private JMenu fileMenu;
+    private JMenu baseMenu;
+    private JMenuItem loadFileBase;
+    private JMenuItem saveFileBase;
+    private JMenuItem loadLevelBase;
+    private JMenuItem saveLevelBase;
 
     private BaseCollection baseCollection;
     private Draw draw;
@@ -35,7 +44,6 @@ public class FormBase {
         frame.setSize(1250, 600);
         frame.setState(JFrame.NORMAL);
         frame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        frame.setVisible(true);
 
         baseCollection = new BaseCollection(1073, 558);
         drawBase = new DrawBase(baseCollection);
@@ -44,7 +52,92 @@ public class FormBase {
         listModelVehicle = new DefaultListModel<>();
         listBoxBase.setModel(listModelVehicle);
         dopLinkedList = new LinkedList<>();
+        //Меню для работы с файлами
+        menuBar = new JMenuBar();
+        //файлы
+        fileMenu = new JMenu("Файлы");
+        saveFileBase = new JMenuItem("Сохранить");
+        saveFileBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser saveFileDialog = new JFileChooser();
+                saveFileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+                int returnVal = saveFileDialog.showSaveDialog(frame);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    if(baseCollection.SaveData(saveFileDialog.getSelectedFile().getPath())){
+                        JOptionPane.showMessageDialog(frame, "Файл сохранен", "Файл", JOptionPane.INFORMATION_MESSAGE);
+                    }else {
+                        JOptionPane.showMessageDialog(frame, "Файл не сохранен", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        loadFileBase = new JMenuItem("Загрузить");
+        loadFileBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser openFileDialog = new JFileChooser();
+                openFileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+                int returnVal = openFileDialog.showOpenDialog(frame);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    if(baseCollection.LoadData(openFileDialog.getSelectedFile().getPath())){
+                        JOptionPane.showMessageDialog(frame, "Файл загружен", "Файл", JOptionPane.INFORMATION_MESSAGE);
+                        reloadLevel();
+                        frame.repaint();
+                    }else {
+                        JOptionPane.showMessageDialog(frame, "Файл не загружен", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        fileMenu.add(saveFileBase);
+        fileMenu.add(loadFileBase);
+        //базы
+        baseMenu = new JMenu("Базы");
+        saveLevelBase = new JMenuItem("Сохранить");
+        saveLevelBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser saveFileDialog = new JFileChooser();
+                saveFileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+                if(listBoxBase.getSelectedValue() == null){
+                    JOptionPane.showMessageDialog(frame, "Выберите уровень базы", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+                int returnVal = saveFileDialog.showSaveDialog(frame);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    if(baseCollection.SaveBase(saveFileDialog.getSelectedFile().getPath(), listBoxBase.getSelectedValue())){
+                        JOptionPane.showMessageDialog(frame, "Файл сохранен", "Файл", JOptionPane.INFORMATION_MESSAGE);
+                    }else {
+                        JOptionPane.showMessageDialog(frame, "Файл не сохранен", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        loadLevelBase = new JMenuItem("Загрузить");
+        loadLevelBase.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JFileChooser openFileDialog = new JFileChooser();
+                openFileDialog.setFileFilter(new FileNameExtensionFilter("Текстовый файл", "txt"));
+                int returnVal = openFileDialog.showOpenDialog(frame);
+                if(returnVal == JFileChooser.APPROVE_OPTION){
+                    if(baseCollection.LoadBase(openFileDialog.getSelectedFile().getPath())){
+                        JOptionPane.showMessageDialog(frame, "Файл загружен", "Файл", JOptionPane.INFORMATION_MESSAGE);
+                        reloadLevel();
+                        frame.repaint();
+                    }else {
+                        JOptionPane.showMessageDialog(frame, "Файл не загружен", "Ошибка", JOptionPane.ERROR_MESSAGE);
+                    }
+                }
+            }
+        });
+        baseMenu.add(saveLevelBase);
+        baseMenu.add(loadLevelBase);
+        menuBar.add(fileMenu);
+        menuBar.add(baseMenu);
+        frame.setJMenuBar(menuBar);
 
+        frame.setVisible(true);
         buttonSetCombatvehicle.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {

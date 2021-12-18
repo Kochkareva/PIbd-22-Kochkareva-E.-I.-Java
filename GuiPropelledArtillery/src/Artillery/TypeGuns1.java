@@ -28,4 +28,9 @@ public class TypeGuns1 implements  IGuns{
                 break;
         }
     }
+
+    @Override
+    public String toString(){
+        return this.getClass().getSimpleName() + "." + (dopNumbersGuns.ordinal()+1);
+    }
 }
