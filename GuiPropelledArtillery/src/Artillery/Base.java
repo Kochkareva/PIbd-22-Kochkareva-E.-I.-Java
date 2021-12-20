@@ -56,25 +56,25 @@ public class Base<T extends ITransport, N extends IGuns> {
      * Перегрузка оператора сложения
      * Логика действия: на базу добавляется военная техника
      */
-    public int operatorAdd(T combatVehicle) {
-        if(_places.size()<_maxCount){
-            _places.add(combatVehicle);
-            return _places.size();
+    public boolean operatorAdd(T combatVehicle) throws BaseOverflowException{
+        if(_places.size() >= _maxCount){
+            throw new BaseOverflowException();
         }
-        return -1;
+        _places.add(combatVehicle);
+        return true;
     }
 
     /**
      * Перегрузка оператора вычитания
      * Логика действия: с базы забираем военную технику
      */
-    public T operatorDelete(int index) {
-        if(index >= 0 && index<_maxCount && _places.get(index) != null){
-            T vehicle = _places.get(index);
-            _places.remove(index);
-            return vehicle;
+    public T operatorDelete(int index)  throws BaseNotFoundException {
+        if (index < -1 || index >= _maxCount) {
+            throw new BaseNotFoundException(index);
         }
-        return null;
+        T vehicle = _places.get(index);
+        _places.remove(index);
+        return vehicle;
     }
     /**
      * Метод отрисовки базы

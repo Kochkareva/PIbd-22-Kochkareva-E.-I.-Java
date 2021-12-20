@@ -1,6 +1,7 @@
 package Artillery;
 
 import java.io.FileWriter;
+import java.security.KeyException;
 import  java.util.*;
 import  java.io.*;
 
@@ -85,7 +86,7 @@ public class BaseCollection {
      *
      * @param filename Путь и имя файла
      */
-    public boolean SaveData(String filename) {
+    public void SaveData(String filename) throws IOException {
         if (!filename.contains(".txt")) {
             filename += ".txt";
         }
@@ -105,10 +106,7 @@ public class BaseCollection {
                     }
                 }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
-        return true;
     }
 
     /**
@@ -116,16 +114,16 @@ public class BaseCollection {
      *
      * @param filename Путь и имя файла
      */
-    public boolean LoadData(String filename) {
+    public void LoadData(String filename) throws IOException, BaseOverflowException {
         if (!(new File(filename).exists())) {
-            return false;
+            throw new FileNotFoundException("Файл" + filename + "не найден");
         }
         try (FileReader fr = new FileReader(filename)) {
             Scanner sc = new Scanner(fr);
             if (sc.nextLine().contains("BaseCollection")) {
                 baseStages.clear();
             } else {
-                return false;
+                throw new IllegalArgumentException("Неверный формат файла");
             }
             ITransport artillery = null;
             String key = "";
@@ -141,23 +139,20 @@ public class BaseCollection {
                     } else if (strs.contains("SelfPropelledArtillery")) {
                         artillery = new SelfPropelledArtillery(strs.split(separator)[1]);
                     }
-                    if (baseStages.get(key).operatorAdd(artillery) == -1) {
-                        return false;
+                    if (!baseStages.get(key).operatorAdd(artillery)) {
+                        throw new BaseOverflowException();
                     }
                 }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
-        return true;
     }
 
-    public boolean SaveBase(String filename, String key) {
+    public void SaveBase(String filename, String key) throws IOException, KeyException {
         if (!filename.contains(".txt")) {
             filename += ".txt";
         }
         if (!baseStages.containsKey(key)) {
-            return false;
+            throw new KeyException();
         }
         try (FileWriter fw = new FileWriter(filename, true)) {
             if (baseStages.containsKey(key)) {
@@ -174,27 +169,27 @@ public class BaseCollection {
                     fw.write(artillery.toString() + "\n");
                 }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
-        return true;
     }
 
-    public boolean LoadBase(String filename){
+    public void LoadBase(String filename) throws IOException, BaseOverflowException {
+        if (!(new File(filename).exists())) {
+            throw new FileNotFoundException("Файл" + filename + "не найден");
+        }
         try (FileReader fr = new FileReader(filename)) {
             Scanner sc = new Scanner(fr);
             String key = "";
             String strs;
             strs = sc.nextLine();
-            if(strs.contains("Base")){
+            if (strs.contains("Base")) {
                 key = strs.split(separator)[1];
-                if(baseStages.containsKey(key)){
+                if (baseStages.containsKey(key)) {
                     baseStages.get(key).Clear();
-                }else{
+                } else {
                     baseStages.put(key, new Base<ITransport, IGuns>(pictureWidth, pictureHeight));
                 }
-            }else {
-                return false;
+            } else {
+                throw new IllegalArgumentException("Неверный формат файла");
             }
             ITransport artillery = null;
             while (sc.hasNextLine()) {
@@ -205,15 +200,12 @@ public class BaseCollection {
                     } else if (strs.contains("SelfPropelledArtillery")) {
                         artillery = new SelfPropelledArtillery(strs.split(separator)[1]);
                     }
-                    if (baseStages.get(key).operatorAdd(artillery) == -1) {
-                        return false;
+                    if (!baseStages.get(key).operatorAdd(artillery)) {
+                        throw new BaseOverflowException();
                     }
                 }
             }
-        } catch (IOException ex) {
-            ex.printStackTrace();
         }
-        return true;
     }
 }
 
