@@ -59,9 +59,11 @@ public class SelfPropelledArtillery extends CombatVehicle{
                 break;
         }
     }
-    /// <summary>
-    /// Конструктор для загрузки с файла
-    /// </summary>
+
+    /**
+     * Конструктор для загрузки с файла
+     * @param info
+     */
     public SelfPropelledArtillery(String info)
     {
         super(info);
